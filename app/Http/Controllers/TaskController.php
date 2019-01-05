@@ -10,4 +10,11 @@ class TaskController extends Controller
     {
         return view('tasks.index');
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+           'title' => 'required'
+        ]);
+    }
 }
