@@ -12,6 +12,10 @@
                 {{--</div>--}}
             {{--@endforeach--}}
         {{--@endif--}}
+
+        @if (session()->has('msg'))
+            <div class="alert alert-success">{{session()->get('msg')}}</div>
+        @endif
         <div class="card">
             <div class="card-header">Add Task</div>
             <div class="card-body">
@@ -20,7 +24,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="Task"></label>
-                        <input class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}" type="text" name="task" id="task" placeholder="Task">
+                        <input class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}" type="text" name="title" id="task" placeholder="Task">
                         <div class="invalid-feedback">
                             {{$errors->has('title' ? $errors->first('title') : '')}}
                         </div>
@@ -41,12 +45,17 @@
                 <table class="table table-bordered">
                     <tr>
                         <th>Task</th>
-                        <th>Action</th>
+                        <th style="width: 2em;">Action</th>
                     </tr>
+
+                    @foreach($tasks as $task)
                     <tr>
-                        <td>Task</td>
-                        <td><button class="btn btn-danger btn-sm">Delete</button></td>
+                        <td>{{$task->title}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
                     </tr>
+                        @endforeach
                 </table>
             </div>
         </div>

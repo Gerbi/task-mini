@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Task;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        return view('tasks.index');
+        $tasks = Task::all();
+
+        return view('tasks.index', compact('tasks'));
     }
 
     public function store(Request $request)
@@ -16,5 +19,15 @@ class TaskController extends Controller
         $request->validate([
            'title' => 'required'
         ]);
+
+        Task::create([
+        'title' => $request->title
+        ]);
+
+        session()->flash('msg','Task as been created');
+
+        return redirect('/');
     }
+
+
 }
